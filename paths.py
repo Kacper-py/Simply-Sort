@@ -54,7 +54,7 @@ class Paths:
         self.pathsWin.mainloop()
         
     def close(self):
-        if messagebox.askyesno(title='Quit?', message='Are you sure you have set everything how you want it to be?'):
+        if messagebox.askyesno(title='Quit?', message='Are you sure you want to quit?'):
             self.pathsWin.destroy()
             
     def addPath(self):
