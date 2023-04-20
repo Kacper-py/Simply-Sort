@@ -6,7 +6,7 @@ import time
 class Paths:
     def __init__(self):
         self.pathsWin = tk.Tk(className =' Paths Settings')
-        self.pathsWin.geometry('470x410')
+        self.pathsWin.geometry('470x450')
         
         self.testLabel = tk.Label(self.pathsWin, font=('Consolas', 12), text='Change or add your paths here')
         self.testLabel.pack()
@@ -32,9 +32,6 @@ class Paths:
         self.addButton = tk.Button(self.pathsWin, text='Add more paths', command=self.addPath)
         self.addButton.pack(pady=10)
         
-        self.exitButton = tk.Button(self.pathsWin, text='EXIT', font=('Consolas', 14), command=self.close)
-        self.exitButton.place(x=700, y=425)
-        
         self.pathsFrame = tk.Frame(self.pathsWin, highlightbackground="#a1a1a1", highlightthickness=2)
         self.pathsFrame.columnconfigure(0, weight=1)
         self.pathsFrame.columnconfigure(1, weight=1)
@@ -50,6 +47,9 @@ class Paths:
             self.pathsEntryButton.grid(row=i, column=2, pady=10, padx=5)
         
         self.pathsFrame.pack()
+        
+        self.exitButton = tk.Button(self.pathsWin, text='EXIT', font=('Consolas', 14), command=self.close)
+        self.exitButton.pack(pady=10)
         
         self.pathsWin.mainloop()
         
@@ -69,5 +69,3 @@ class Paths:
         print(self.sortingEntryVar.get())
         path = str(self.sortingEntryVar.get())
         os.mkdir(f'{path}/elo.txt')
-        
-Paths()
