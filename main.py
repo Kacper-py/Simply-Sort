@@ -10,18 +10,18 @@ from other import Other
 title = ' Simply Sort'
 desc = 'Simply Sort will help you mantain a clean and\nwell organized enviroment in your data. It works by just\ntelling you the schema for naming your files,\nthen you can just drop them in to the predefined folder and wait for the\n Simply Sort to finish placing your files in to the right folders.'
 
-class Logger(object):  # create file like object
+class Logger(object):
 
-    def __init__(self, textbox):  # pass reference to text widget
-        self.textbox = textbox  # keep ref
+    def __init__(self, textbox):
+        self.textbox = textbox
 
     def write(self, text):
-        self.textbox.configure(state="normal")  # make field editable
-        self.textbox.insert("end", text)  # write text to textbox
-        self.textbox.see("end")  # scroll to end
-        self.textbox.configure(state="disabled")  # make field readonly
+        self.textbox.configure(state="normal")
+        self.textbox.insert("end", text)
+        self.textbox.see("end")
+        self.textbox.configure(state="disabled")
 
-    def flush(self):  # needed for file like object
+    def flush(self):
         pass
 
 class Main:
@@ -84,14 +84,14 @@ class Main:
         
     def autoSort(self):
         self.sortingVar += 1
-        if self.sortingVar % 2 == 0:
+        if self.sortingVar % 2 != 0:
             self.autoSorting['text'] = "ON "
             self.autoSorting.configure(bg='#00ff00')
             self.sortButton['state'] = 'disabled'
             self.sortButton['text'] = 'Autosorting ON'
             print('Autosorting ON')
             self.sortButton['width'] = '14'
-        elif self.sortingVar % 2 != 0:
+        elif self.sortingVar % 2 == 0:
             self.autoSorting['text'] = "OFF"
             self.autoSorting.configure(bg='#ff0000')
             self.sortButton['state'] = 'normal'
