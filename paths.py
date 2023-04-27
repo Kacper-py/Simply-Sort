@@ -6,10 +6,10 @@ import time
 class Paths:
     def __init__(self):
         self.pathsWin = tk.Tk(className =' Paths Settings')
-        self.pathsWin.geometry('470x450')
+        self.pathsWin.geometry('470x390')
         
         self.testLabel = tk.Label(self.pathsWin, font=('Consolas', 12), text='Change or add your paths here')
-        self.testLabel.pack()
+        self.testLabel.pack(pady=10)
         
         self.pathsDirectoryFrame = tk.Frame(self.pathsWin, highlightbackground="#a1a1a1", highlightthickness=2)
         self.pathsDirectoryFrame.columnconfigure(0, weight=1)
@@ -27,29 +27,54 @@ class Paths:
         self.pathsDirectoryFrame.pack()
         
         self.addPathsInfo = tk.Label(self.pathsWin, text='Below you can find fields where you can enter\nthe paths for your files to be seved to')
-        self.addPathsInfo.pack()
-                
-        self.addButton = tk.Button(self.pathsWin, text='Add more paths', command=self.addPath)
-        self.addButton.pack(pady=10)
-        
+        self.addPathsInfo.pack(pady=10)
+
         self.pathsFrame = tk.Frame(self.pathsWin, highlightbackground="#a1a1a1", highlightthickness=2)
         self.pathsFrame.columnconfigure(0, weight=1)
         self.pathsFrame.columnconfigure(1, weight=1)
         
         self.addEntryVar = tk.StringVar()
+        self.addEntryVar1 = tk.StringVar()
+        self.addEntryVar2 = tk.StringVar()
+        self.addEntryVar3 = tk.StringVar()
+        
         self.addPathsVar = 5
-        for i in range(0, self.addPathsVar):
-            self.pathNumber = tk.Label(self.pathsFrame, text=str(i+1)+".")
-            self.pathNumber.grid(row=i, column=0, pady=10)
-            self.pathsEntry = tk.Entry(self.pathsFrame, width=50, text=self.addEntryVar)
-            self.pathsEntry.grid(row=i, column=1, pady=10, padx=20)
-            self.pathsEntryButton = tk.Button(self.pathsFrame, width=10, text='Save', activebackground = "cyan", command=self.savePaths)
-            self.pathsEntryButton.grid(row=i, column=2, pady=10, padx=5)
+
+        # Path 1
+        self.pathNumber = tk.Label(self.pathsFrame, text='1.')
+        self.pathNumber.grid(row=0, column=0, pady=10)
+        self.pathsEntry = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar)
+        self.pathsEntry.grid(row=0, column=1, pady=10, padx=20)
+        
+        # Path 2
+        self.pathNumber1 = tk.Label(self.pathsFrame, text='2.')
+        self.pathNumber1.grid(row=1, column=0, pady=10)
+        self.pathsEntry1 = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar1)
+        self.pathsEntry1.grid(row=1, column=1, pady=10, padx=20)
+        
+        # Path 3
+        self.pathNumber2 = tk.Label(self.pathsFrame, text='3.')
+        self.pathNumber2.grid(row=2, column=0, pady=10)
+        self.pathsEntry2 = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar2)
+        self.pathsEntry2.grid(row=2, column=1, pady=10, padx=20)
+        
+        # Path 4
+        self.pathNumber3 = tk.Label(self.pathsFrame, text='4.')
+        self.pathNumber3.grid(row=3, column=0, pady=10)
+        self.pathsEntry3 = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar3)
+        self.pathsEntry3.grid(row=3, column=1, pady=10, padx=20)
         
         self.pathsFrame.pack()
         
-        self.exitButton = tk.Button(self.pathsWin, text='EXIT', font=('Consolas', 14), command=self.close)
-        self.exitButton.pack(pady=10)
+        self.buttonsFrame = tk.Frame(self.pathsWin)
+        
+        self.exitButton = tk.Button(self.buttonsFrame, text='EXIT', font=('Consolas', 14), command=self.close)
+        self.exitButton.grid(row=0, column=1, pady=10, padx=100)
+        
+        self.saveButton = tk.Button(self.buttonsFrame, text='SAVE', font=('Consolas', 14), command=self.savePaths)
+        self.saveButton.grid(row=0, column=0, pady=10, padx=90)
+        
+        self.buttonsFrame.pack()
         
         self.pathsWin.mainloop()
         
@@ -63,9 +88,10 @@ class Paths:
         self.pathsWin.mainloop()
     
     def savePaths(self):
-        print(self.addEntryVar.get())
+        print(self.addEntryVar.get(), self.addEntryVar1.get(), self.addEntryVar2.get(), self.addEntryVar3.get())
+        print("Paths saved.")
         
     def saveDirectory(self):
         print(self.sortingEntryVar.get())
         path = str(self.sortingEntryVar.get())
-        os.mkdir(f'{path}/elo.txt')
+        os.mkdir(f'{path}/elo')

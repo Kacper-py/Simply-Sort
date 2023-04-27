@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter.scrolledtext import ScrolledText
+import logging
 import os
 import sys
 import time
@@ -9,8 +10,10 @@ from other import Other
 
 title = ' Simply Sort'
 desc = 'Simply Sort will help you mantain\na clean and well organized\nenviroment in your data.\nIt works by just telling\nyou the schema for naming\nyour files, then you can\njust drop them in to the\npredefined folder and wait\nfor the Simply Sort to finish\nplacing your files in to\nthe right folders.\n'
+logging.basicConfig(filename="logs.txt", level=logging.DEBUG)
+logging.debug("Debug logging test...")
 
-class Logger(object):
+class LoggerConsole(object):
 
     def __init__(self, textbox):
         self.textbox = textbox
@@ -23,7 +26,7 @@ class Logger(object):
 
     def flush(self):
         pass
-
+    
 class Main:
     def __init__(self):
         
@@ -60,9 +63,13 @@ class Main:
         self.containerFunc.columnconfigure(0, weight=1)
         self.containerFunc.columnconfigure(1, weight=1)
         
-        # opis
-        self.description = tk.Label(self.containerDesc, text=desc, justify='left', font=('David Libre', 11))
+        # tytuł schemty
+        self.description = tk.Label(self.containerDesc, text='Schemas:', justify='left', font=('David Libre', 16))
         self.description.grid(row=0, column=0, sticky=tk.E+tk.W)
+        
+        # schemty
+        self.description = tk.Label(self.containerDesc, text='Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.\nCurabitur aliquet turpis a\ntincidunt consequat. Integer\nfinibus mauris in commodo\npellentesque. Pellentesque\nauctor neque id arcu hendrerit,\nid iaculis felis faucibus.\nNam vulputate dolor neque,\nnon iaculis tortor tempus vitae.', justify='left', font=('David Libre', 11))
+        self.description.grid(row=1, column=0, sticky=tk.E+tk.W)
         
         # kontener na przyciski
         self.containerButtons = tk.Frame(self.containerFunc)
@@ -89,18 +96,40 @@ class Main:
         
         self.autoSGrid.grid(row=0, column=1, padx=5)
         
-        # kontener na Schematy
+        # kontener na Paths
+        self.containerPaths = tk.Frame(self.containerFunc)
+        self.containerPaths.columnconfigure(0, weight=1)
+        self.containerPaths.columnconfigure(1, weight=1)
         
-        self.containerSchemas = tk.Frame(self.containerFunc)
-        self.containerFunc.columnconfigure(0, weight=1)
-        self.containerFunc.columnconfigure(1, weight=1)
+        # tytuł "Your Paths"
+        self.PathsTitle = tk.Label(self.containerPaths, text="Your Paths:", font=('David Libre', 11))
+        self.PathsTitle.grid(row=0, column=0)
         
-        self.schemasTitle = tk.Label(self.containerSchemas, text='Schemas:')
-        self.schemasTitle.grid(row=0, column=0)
-        self.schemasItself = tk.Label(self.containerSchemas, text='Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.\nCurabitur aliquet turpis a\ntincidunt consequat. Integer\nfinibus mauris in commodo\npellentesque. Pellentesque\nauctor neque id arcu hendrerit,\nid iaculis felis faucibus.\nNam vulputate dolor neque,\nnon iaculis tortor tempus vitae.')
-        self.schemasItself.grid(row=1, column=0)
+        # Path 1
+        self.PathsReadOnly = tk.Entry(self.containerPaths, state='normal', width=35)
+        self.PathsReadOnly.grid(row=1, column=0, pady=5)
+        self.PathsReadOnly.insert(tk.END, r'Path1')
+        self.PathsReadOnly.configure(state='readonly')
         
-        self.containerSchemas.grid(row=1, column=0, sticky=tk.E)
+        # Path2
+        self.PathsReadOnly1 = tk.Entry(self.containerPaths, state='normal', width=35)
+        self.PathsReadOnly1.grid(row=2, column=0, pady=5)
+        self.PathsReadOnly1.insert(tk.END, r'Path2')
+        self.PathsReadOnly1.configure(state='readonly')
+        
+        # Path3
+        self.PathsReadOnly2 = tk.Entry(self.containerPaths, state='normal', width=35)
+        self.PathsReadOnly2.grid(row=3, column=0, pady=5)
+        self.PathsReadOnly2.insert(tk.END, r'Path3')
+        self.PathsReadOnly2.configure(state='readonly')
+        
+        # Path4
+        self.PathsReadOnly3 = tk.Entry(self.containerPaths, state='normal', width=35)
+        self.PathsReadOnly3.grid(row=4, column=0, pady=5)
+        self.PathsReadOnly3.insert(tk.END, r'Path4')
+        self.PathsReadOnly3.configure(state='readonly')
+        
+        self.containerPaths.grid(row=0, column=1)
         self.containerButtons.grid(row=0, column=0, sticky=tk.W, pady=20)
         self.containerFunc.grid(row=0, column=1, sticky=tk.W)
         self.containerDesc.grid(row=0, column=0, sticky=tk.E, padx=20)
@@ -109,13 +138,14 @@ class Main:
         self.consoleLog = ScrolledText(self.mainWin, height=50)
         self.consoleLog.pack(padx=10, pady=20)
         
-        logger = Logger(self.consoleLog)
+        logger = LoggerConsole(self.consoleLog)
         sys.stdout = logger
         sys.stderr = logger
         
         self.mainWin.mainloop()
-        
+                
     def sortItems(self):
+        print("Just wait a sec bro...")
         messagebox.showinfo(title='In construction...', message='We are working on it :)')
         
     def autoSort(self):
