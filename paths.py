@@ -2,6 +2,17 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 import time
+from configparser import ConfigParser
+
+# zaczytywanie pliku konfikuracyjnego
+config = ConfigParser()
+config.read('config.ini')
+savedSource = config.get('paths', 'source')
+savedtarget = config.get('paths', 'target')
+savedtarget1 = config.get('paths', 'target1')
+savedtarget2 = config.get('paths', 'target2')
+savedtarget3 = config.get('paths', 'target3')
+print(savedSource)
 
 class Paths:
     def __init__(self):
@@ -18,15 +29,15 @@ class Paths:
         self.sortingEntryVar = tk.StringVar()
         self.sortingDirectoryLabel = tk.Label(self.pathsDirectoryFrame, text='From there your files will be sorted')
         self.sortingDirectoryLabel.grid(row=0, column=0, pady=10)
-        self.sortingDirectory = tk.Entry(self.pathsDirectoryFrame, text='elo', width=25, textvariable=self.sortingEntryVar)
-        self.sortingDirectory.insert(tk.END, r'C:\Users\Kacper\Desktop')
+        self.sortingDirectory = tk.Entry(self.pathsDirectoryFrame, width=25, textvariable=self.sortingEntryVar)
+        self.sortingDirectory.insert(tk.END, savedSource)
         self.sortingDirectory.grid(row=0, column=1, pady=10)
         self.sortingDirectoryButton = tk.Button(self.pathsDirectoryFrame, text='Save', width=10, activebackground = "cyan", command=self.saveDirectory)
         self.sortingDirectoryButton.grid(row=0, column=2, pady=10, padx=3)
         
         self.pathsDirectoryFrame.pack()
         
-        self.addPathsInfo = tk.Label(self.pathsWin, text='Below you can find fields where you can enter\nthe paths for your files to be seved to')
+        self.addPathsInfo = tk.Label(self.pathsWin, text='Below you can find fields where you can enter\nthe paths for your files to be saved to')
         self.addPathsInfo.pack(pady=10)
 
         self.pathsFrame = tk.Frame(self.pathsWin, highlightbackground="#a1a1a1", highlightthickness=2)
@@ -44,24 +55,28 @@ class Paths:
         self.pathNumber = tk.Label(self.pathsFrame, text='1.')
         self.pathNumber.grid(row=0, column=0, pady=10)
         self.pathsEntry = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar)
+        self.pathsEntry.insert(tk.END, savedtarget)
         self.pathsEntry.grid(row=0, column=1, pady=10, padx=20)
         
         # Path 2
         self.pathNumber1 = tk.Label(self.pathsFrame, text='2.')
         self.pathNumber1.grid(row=1, column=0, pady=10)
         self.pathsEntry1 = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar1)
+        self.pathsEntry1.insert(tk.END, savedtarget1)
         self.pathsEntry1.grid(row=1, column=1, pady=10, padx=20)
         
         # Path 3
         self.pathNumber2 = tk.Label(self.pathsFrame, text='3.')
         self.pathNumber2.grid(row=2, column=0, pady=10)
         self.pathsEntry2 = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar2)
+        self.pathsEntry2.insert(tk.END, savedtarget2)
         self.pathsEntry2.grid(row=2, column=1, pady=10, padx=20)
         
         # Path 4
         self.pathNumber3 = tk.Label(self.pathsFrame, text='4.')
         self.pathNumber3.grid(row=3, column=0, pady=10)
         self.pathsEntry3 = tk.Entry(self.pathsFrame, width=60, text=self.addEntryVar3)
+        self.pathsEntry3.insert(tk.END, savedtarget3)
         self.pathsEntry3.grid(row=3, column=1, pady=10, padx=20)
         
         self.pathsFrame.pack()
@@ -88,10 +103,18 @@ class Paths:
         self.pathsWin.mainloop()
     
     def savePaths(self):
-        print(self.addEntryVar.get(), self.addEntryVar1.get(), self.addEntryVar2.get(), self.addEntryVar3.get())
-        print("Paths saved.")
+        # print(self.addEntryVar.get(), self.addEntryVar1.get(), self.addEntryVar2.get(), self.addEntryVar3.get())
+        config = ConfigParser()
+        config.read('config.ini')
+        config.set('paths', 'target', self.addEntryVar.get())
+            
+        with open('config.ini', 'w') as configFile:
+            config.write(configFile)
+        print(f"Paths saved. {self.addEntryVar.get()}")
         
     def saveDirectory(self):
         print(self.sortingEntryVar.get())
         path = str(self.sortingEntryVar.get())
         os.mkdir(f'{path}/elo')
+        
+Paths()

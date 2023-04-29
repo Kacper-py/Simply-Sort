@@ -1,31 +1,39 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter.scrolledtext import ScrolledText
-import logging
-import os
+import shutil
 import sys
-import time
-from paths import Paths
+import os
 from other import Other
+
+from configparser import ConfigParser
+
+# zaczytywanie pliku konfikuracyjnego
+config = ConfigParser()
+config.read('config.ini')
+savedSource = config.get('paths', 'source')
+savedtarget = config.get('paths', 'target')
+savedtarget1 = config.get('paths', 'target1')
+savedtarget2 = config.get('paths', 'target2')
+savedtarget3 = config.get('paths', 'target3')
+print(savedSource)
 
 title = ' Simply Sort'
 desc = 'Simply Sort will help you mantain\na clean and well organized\nenviroment in your data.\nIt works by just telling\nyou the schema for naming\nyour files, then you can\njust drop them in to the\npredefined folder and wait\nfor the Simply Sort to finish\nplacing your files in to\nthe right folders.\n'
-logging.basicConfig(filename="logs.txt", level=logging.DEBUG)
-logging.debug("Debug logging test...")
 
-class LoggerConsole(object):
+# class LoggerConsole(object):
 
-    def __init__(self, textbox):
-        self.textbox = textbox
+#     def __init__(self, textbox):
+#         self.textbox = textbox
 
-    def write(self, text):
-        self.textbox.configure(state="normal")
-        self.textbox.insert("end", text)
-        self.textbox.see("end")
-        self.textbox.configure(state="disabled")
+#     def write(self, text):
+#         self.textbox.configure(state="normal")
+#         self.textbox.insert("end", text)
+#         self.textbox.see("end")
+#         self.textbox.configure(state="disabled")
 
-    def flush(self):
-        pass
+#     def flush(self):
+#         pass
     
 class Main:
     def __init__(self):
@@ -108,27 +116,28 @@ class Main:
         # Path 1
         self.PathsReadOnly = tk.Entry(self.containerPaths, state='normal', width=35)
         self.PathsReadOnly.grid(row=1, column=0, pady=5)
-        self.PathsReadOnly.insert(tk.END, r'Path1')
+        self.PathsReadOnly.insert(tk.END, savedtarget)
         self.PathsReadOnly.configure(state='readonly')
         
         # Path2
         self.PathsReadOnly1 = tk.Entry(self.containerPaths, state='normal', width=35)
         self.PathsReadOnly1.grid(row=2, column=0, pady=5)
-        self.PathsReadOnly1.insert(tk.END, r'Path2')
+        self.PathsReadOnly1.insert(tk.END, savedtarget1)
         self.PathsReadOnly1.configure(state='readonly')
         
         # Path3
         self.PathsReadOnly2 = tk.Entry(self.containerPaths, state='normal', width=35)
         self.PathsReadOnly2.grid(row=3, column=0, pady=5)
-        self.PathsReadOnly2.insert(tk.END, r'Path3')
+        self.PathsReadOnly2.insert(tk.END, savedtarget2)
         self.PathsReadOnly2.configure(state='readonly')
         
         # Path4
         self.PathsReadOnly3 = tk.Entry(self.containerPaths, state='normal', width=35)
         self.PathsReadOnly3.grid(row=4, column=0, pady=5)
-        self.PathsReadOnly3.insert(tk.END, r'Path4')
+        self.PathsReadOnly3.insert(tk.END, savedtarget3)
         self.PathsReadOnly3.configure(state='readonly')
         
+        # wywołania kontenerów
         self.containerPaths.grid(row=0, column=1)
         self.containerButtons.grid(row=0, column=0, sticky=tk.W, pady=20)
         self.containerFunc.grid(row=0, column=1, sticky=tk.W)
@@ -138,15 +147,16 @@ class Main:
         self.consoleLog = ScrolledText(self.mainWin, height=50)
         self.consoleLog.pack(padx=10, pady=20)
         
-        logger = LoggerConsole(self.consoleLog)
-        sys.stdout = logger
-        sys.stderr = logger
+        # logger = LoggerConsole(self.consoleLog)
+        # sys.stdout = logger
+        # sys.stderr = logger
         
         self.mainWin.mainloop()
                 
     def sortItems(self):
-        print("Just wait a sec bro...")
-        messagebox.showinfo(title='In construction...', message='We are working on it :)')
+        print("sorting")
+        # shutil.move(self.source, self.target)
+            
         
     def autoSort(self):
         self.sortingVar += 1
@@ -164,7 +174,7 @@ class Main:
             print('Autosorting OFF')
     
     def setPaths(self):
-        Paths()
+        os.system('python.exe paths.py')
     
     def setOther(self):
         Other()
