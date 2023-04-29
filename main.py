@@ -21,19 +21,19 @@ print(savedSource)
 title = ' Simply Sort'
 desc = 'Simply Sort will help you mantain\na clean and well organized\nenviroment in your data.\nIt works by just telling\nyou the schema for naming\nyour files, then you can\njust drop them in to the\npredefined folder and wait\nfor the Simply Sort to finish\nplacing your files in to\nthe right folders.\n'
 
-# class LoggerConsole(object):
+class LoggerConsole(object):
 
-#     def __init__(self, textbox):
-#         self.textbox = textbox
+    def __init__(self, textbox):
+        self.textbox = textbox
 
-#     def write(self, text):
-#         self.textbox.configure(state="normal")
-#         self.textbox.insert("end", text)
-#         self.textbox.see("end")
-#         self.textbox.configure(state="disabled")
+    def write(self, text):
+        self.textbox.configure(state="normal")
+        self.textbox.insert("end", text)
+        self.textbox.see("end")
+        self.textbox.configure(state="disabled")
 
-#     def flush(self):
-#         pass
+    def flush(self):
+        pass
     
 class Main:
     def __init__(self):
@@ -147,9 +147,9 @@ class Main:
         self.consoleLog = ScrolledText(self.mainWin, height=50)
         self.consoleLog.pack(padx=10, pady=20)
         
-        # logger = LoggerConsole(self.consoleLog)
-        # sys.stdout = logger
-        # sys.stderr = logger
+        logger = LoggerConsole(self.consoleLog)
+        sys.stdout = logger
+        sys.stderr = logger
         
         self.mainWin.mainloop()
                 
