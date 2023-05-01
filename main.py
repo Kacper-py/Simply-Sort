@@ -5,7 +5,6 @@ import shutil
 import sys
 import os
 from other import Other
-
 from configparser import ConfigParser
 
 # zaczytywanie pliku konfikuracyjnego
@@ -16,7 +15,10 @@ savedtarget = config.get('paths', 'target')
 savedtarget1 = config.get('paths', 'target1')
 savedtarget2 = config.get('paths', 'target2')
 savedtarget3 = config.get('paths', 'target3')
-print(savedSource)
+savedSchema = config.get('schemas', 'schema')
+savedSchema1 = config.get('schemas', 'schema1')
+savedSchema2 = config.get('schemas', 'schema2')
+savedSchema3 = config.get('schemas', 'schema3')
 
 title = ' Simply Sort'
 desc = 'Simply Sort will help you mantain\na clean and well organized\nenviroment in your data.\nIt works by just telling\nyou the schema for naming\nyour files, then you can\njust drop them in to the\npredefined folder and wait\nfor the Simply Sort to finish\nplacing your files in to\nthe right folders.\n'
@@ -36,8 +38,8 @@ class LoggerConsole(object):
         pass
     
 class Main:
-    def __init__(self):
-        
+    def __init__(self):   
+    
         self.mainWin = tk.Tk(className=title)
         self.mainWin.geometry('800x500')
         
@@ -154,9 +156,20 @@ class Main:
         self.mainWin.mainloop()
                 
     def sortItems(self):
-        print("sorting")
-        # shutil.move(self.source, self.target)
+        print("Starting sorting...\n")
+        
+        for file in os.listdir(savedSource):
+            if file.endswith(savedSchema1):
+                shutil.move(f'{savedSource}/{file}', savedtarget1)
+                print(f'Sorting to {savedtarget1} directory finished succesfuly')
+            elif file.endswith(savedSchema2):
+                shutil.move(f'{savedSource}/{file}', savedtarget2)
+                print(f'Sorting to {savedtarget2} directory finished succesfuly')
+            elif file.endswith(savedSchema3):
+                shutil.move(f'{savedSource}/{file}', savedtarget3)
+                print(f'Sorting to {savedtarget3} directory finished succesfuly')
             
+        print('\nSorting finished succefully!')
         
     def autoSort(self):
         self.sortingVar += 1
@@ -174,10 +187,10 @@ class Main:
             print('Autosorting OFF')
     
     def setPaths(self):
+        self.mainWin.destroy()
         os.system('python.exe paths.py')
     
     def setOther(self):
         Other()
-        
         
 Main()

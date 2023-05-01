@@ -12,10 +12,10 @@ savedtarget = config.get('paths', 'target')
 savedtarget1 = config.get('paths', 'target1')
 savedtarget2 = config.get('paths', 'target2')
 savedtarget3 = config.get('paths', 'target3')
-print(savedSource)
 
 class Paths:
     def __init__(self):
+        
         self.pathsWin = tk.Tk(className =' Paths Settings')
         self.pathsWin.geometry('470x390')
         
@@ -96,6 +96,7 @@ class Paths:
     def close(self):
         if messagebox.askyesno(title='Quit?', message='Are you sure you want to quit?'):
             self.pathsWin.destroy()
+            os.system('python.exe main.py')
             
     def addPath(self):
         self.addPathsVar += 1
@@ -103,18 +104,24 @@ class Paths:
         self.pathsWin.mainloop()
     
     def savePaths(self):
-        # print(self.addEntryVar.get(), self.addEntryVar1.get(), self.addEntryVar2.get(), self.addEntryVar3.get())
         config = ConfigParser()
         config.read('config.ini')
         config.set('paths', 'target', self.addEntryVar.get())
+        config.set('paths', 'target1', self.addEntryVar1.get())
+        config.set('paths', 'target2', self.addEntryVar2.get())
+        config.set('paths', 'target3', self.addEntryVar3.get())
             
         with open('config.ini', 'w') as configFile:
             config.write(configFile)
-        print(f"Paths saved. {self.addEntryVar.get()}")
+        print(f"Paths saved. {self.addEntryVar.get()}")     
         
     def saveDirectory(self):
-        print(self.sortingEntryVar.get())
-        path = str(self.sortingEntryVar.get())
-        os.mkdir(f'{path}/elo')
+        config = ConfigParser()
+        config.read('config.ini')
+        config.set('paths', 'source', self.sortingEntryVar.get())
+            
+        with open('config.ini', 'w') as configFile:
+            config.write(configFile)
+        print(f"Target saved. {self.sortingEntryVar.get()}")
         
 Paths()
