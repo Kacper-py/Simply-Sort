@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 import os
-import time
 from configparser import ConfigParser
 
 # zaczytywanie pliku konfikuracyjnego

@@ -4,7 +4,6 @@ from tkinter.scrolledtext import ScrolledText
 import shutil
 import sys
 import os
-from other import Other
 from configparser import ConfigParser
 
 # zaczytywanie pliku konfikuracyjnego
@@ -46,12 +45,9 @@ class Main:
         self.upperMenu = tk.Menu(self.mainWin)
         self.menuSettings = tk.Menu(self.upperMenu, tearoff=0)
         self.menuSettings.add_command(label='Paths', command=self.setPaths)
-        
-        self.menuMiscellaneous = tk.Menu(self.upperMenu, tearoff=0)
-        self.menuMiscellaneous.add_command(label='Other Settings', command=self.setOther)
+        self.menuSettings.add_command(label='Schemas', command=self.setOther)
         
         self.upperMenu.add_cascade(menu=self.menuSettings, label='Settings')
-        self.upperMenu.add_cascade(menu=self.menuMiscellaneous, label='Miscellaneous')
         
         self.mainWin.config(menu=self.upperMenu)
         self.upperMenu.configure(bg='#ffffff')
@@ -191,6 +187,7 @@ class Main:
         os.system('python.exe paths.py')
     
     def setOther(self):
-        Other()
+        self.mainWin.destroy()
+        os.system('python.exe other.py')
         
 Main()
