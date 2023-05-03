@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 from configparser import ConfigParser
+import time
 
 # zaczytywanie pliku konfikuracyjnego
 config = ConfigParser()
@@ -83,10 +84,13 @@ class Paths:
         self.buttonsFrame = tk.Frame(self.pathsWin)
         
         self.exitButton = tk.Button(self.buttonsFrame, text='EXIT', font=('Consolas', 14), command=self.close)
-        self.exitButton.grid(row=0, column=1, pady=10, padx=100)
+        self.exitButton.grid(row=0, column=2, pady=10, padx=10)
         
         self.saveButton = tk.Button(self.buttonsFrame, text='SAVE', font=('Consolas', 14), command=self.savePaths)
-        self.saveButton.grid(row=0, column=0, pady=10, padx=90)
+        self.saveButton.grid(row=0, column=0, pady=10, padx=10)
+        
+        self.saveInfo = tk.Label(self.buttonsFrame, fg='green', text='         ')
+        self.saveInfo.grid(row=0, column=1)
         
         self.buttonsFrame.pack()
         
@@ -109,10 +113,48 @@ class Paths:
         config.set('paths', 'target1', self.addEntryVar1.get())
         config.set('paths', 'target2', self.addEntryVar2.get())
         config.set('paths', 'target3', self.addEntryVar3.get())
+        
+        if os.path.exists(self.addEntryVar.get()) is False:
+            if messagebox.askyesno(title='Warning!', message=f'The path {self.addEntryVar.get().upper()} does not exist!\nAre you sure you want to save that path anyway?\n\nIt can lead to all kind of error and bugs'):
+                with open('config.ini', 'w') as configFile:
+                    config.write(configFile)
+                print(f"Paths saved. {self.addEntryVar.get()}")
+        elif os.path.exists(self.addEntryVar.get()) is True:
+            with open('config.ini', 'w') as configFile:
+                config.write(configFile)
+            print(f"Paths saved. {self.addEntryVar.get()}")
+        
+        if os.path.exists(self.addEntryVar1.get()) is False:
+            if messagebox.askyesno(title='Warning!', message=f'The path {self.addEntryVar1.get().upper()} does not exist!\nAre you sure you want to save that path anyway?\n\nIt can lead to all kind of error and bugs'):
+                with open('config.ini', 'w') as configFile:
+                    config.write(configFile)
+                print(f"Paths saved. {self.addEntryVar1.get()}")
+        elif os.path.exists(self.addEntryVar1.get()) is True:
+            with open('config.ini', 'w') as configFile:
+                config.write(configFile)
+            print(f"Paths saved. {self.addEntryVar1.get()}")
             
-        with open('config.ini', 'w') as configFile:
-            config.write(configFile)
-        print(f"Paths saved. {self.addEntryVar.get()}")     
+        if os.path.exists(self.addEntryVar2.get()) is False:
+            if messagebox.askyesno(title='Warning!', message=f'The path {self.addEntryVar2.get().upper()} does not exist!\nAre you sure you want to save that path anyway?\n\nIt can lead to all kind of error and bugs'):
+                with open('config.ini', 'w') as configFile:
+                    config.write(configFile)
+                print(f"Paths saved. {self.addEntryVar2.get()}")
+        elif os.path.exists(self.addEntryVar2.get()) is True:
+            with open('config.ini', 'w') as configFile:
+                config.write(configFile)
+            print(f"Paths saved. {self.addEntryVar2.get()}")
+            
+        if os.path.exists(self.addEntryVar3.get()) is False:
+            if messagebox.askyesno(title='Warning!', message=f'The path {self.addEntryVar3.get().upper()} does not exist!\nAre you sure you want to save that path anyway?\n\nIt can lead to all kind of error and bugs'):
+                with open('config.ini', 'w') as configFile:
+                    config.write(configFile)
+                print(f"Paths saved. {self.addEntryVar3.get()}")
+        elif os.path.exists(self.addEntryVar3.get()) is True:
+            with open('config.ini', 'w') as configFile:
+                config.write(configFile)
+            print(f"Paths saved. {self.addEntryVar3.get()}")
+            
+        self.saveInfo['text'] = 'Saved!'
         
     def saveDirectory(self):
         config = ConfigParser()
@@ -122,5 +164,7 @@ class Paths:
         with open('config.ini', 'w') as configFile:
             config.write(configFile)
         print(f"Target saved. {self.sortingEntryVar.get()}")
+        
+        self.saveInfo['text'] = 'Saved!'
         
 Paths()

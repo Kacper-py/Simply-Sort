@@ -77,10 +77,13 @@ class Other:
         self.buttonsFrame = tk.Frame(self.schemasWin)
         
         self.exitButton = tk.Button(self.buttonsFrame, text='EXIT', font=('Consolas', 14), command=self.close)
-        self.exitButton.grid(row=0, column=1, pady=10, padx=100)
+        self.exitButton.grid(row=0, column=2, pady=10, padx=10)
         
         self.saveButton = tk.Button(self.buttonsFrame, text='SAVE', font=('Consolas', 14), command=self.saveSchemas)
-        self.saveButton.grid(row=0, column=0, pady=10, padx=90)
+        self.saveButton.grid(row=0, column=0, pady=10, padx=10)
+        
+        self.saveInfo = tk.Label(self.buttonsFrame, fg='green', text='         ')
+        self.saveInfo.grid(row=0, column=1)
         
         self.buttonsFrame.pack()
         
@@ -101,6 +104,8 @@ class Other:
             
         with open('config.ini', 'w') as configFile:
             config.write(configFile)
-        print(f"Schemas saved. {self.schemasEntryVar.get()}")
+        print(f"Schemas saved. {self.schemasEntryVar.get()}, {self.schemasEntryVar1.get()}, {self.schemasEntryVar2.get()}, {self.schemasEntryVar3.get()}")
+        
+        self.saveInfo['text'] = 'Saved!'
             
 Other()
