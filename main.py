@@ -183,6 +183,8 @@ class Main:
         self.sortThread.start()
                 
     def sortItems(self):
+        self.configSchemasList = [config.get('schemas', f'schema') if i == 0 else config.get('schemas', f'schema{i}') for i in range(0,4)]
+        
         if os.path.isdir(savedSource) is False:
             print('Path that you entered cannot be found! :(')
         else:
@@ -190,34 +192,39 @@ class Main:
             if len(dir) == 0:
                 print('Your sorting folder is empty!')
             else:
-                print("--------------------------------------------------------------------------------\nStarting sorting...\n--------------------------------------------------------------------------------")
+                print('-------------------------------Starting sorting...------------------------------')
                 for file in os.listdir(savedSource):
-                    if file.endswith(savedSchema):
-                        if os.path.exists(savedtarget) is True:
-                            shutil.move(f'{savedSource}/{file}', savedtarget)
-                            print(f'Sorting to {savedtarget.upper()} directory finished succesfuly')
-                        elif os.path.exists(savedtarget) is False:
-                            print(f'Path {savedtarget.upper()} does not exist!')
-                    elif file.endswith(savedSchema1):
-                        if os.path.exists(savedtarget1) is True:
-                            shutil.move(f'{savedSource}/{file}', savedtarget1)
-                            print(f'Sorting to {savedtarget1.upper()} directory finished succesfuly')
-                        elif os.path.exists(savedtarget1) is False:
-                            print(f'Path {savedtarget1.upper()} does not exist!')
-                    elif file.endswith(savedSchema2):
-                        if os.path.exists(savedtarget2) is True:
-                            shutil.move(f'{savedSource}/{file}', savedtarget2)
-                            print(f'Sorting to {savedtarget2.upper()} directory finished succesfuly')
-                        elif os.path.exists(savedtarget2) is False:
-                            print(f'Path {savedtarget2.upper()} does not exist!')
-                    elif file.endswith(savedSchema3):
-                        if os.path.exists(savedtarget3) is True:
-                            shutil.move(f'{savedSource}/{file}', savedtarget3)
-                            print(f'Sorting to {savedtarget3.upper()} directory finished succesfuly')
-                        elif os.path.exists(savedtarget3) is False:
-                            print(f'Path {savedtarget3.upper()} does not exist!')
-            
-                print('--------------------------------------------------------------------------------\nSorting finished succefully!\n--------------------------------------------------------------------------------')
+                    if file.endswith(savedSchema) or file.endswith(savedSchema1) or file.endswith(savedSchema2) or file.endswith(savedSchema3):
+                        for file in os.listdir(savedSource):
+                            if file.endswith(savedSchema):
+                                if os.path.exists(savedtarget) is True:
+                                    shutil.move(f'{savedSource}/{file}', savedtarget)
+                                    print(f'Sorting to {savedtarget.upper()} directory finished succesfuly')
+                                elif os.path.exists(savedtarget) is False:
+                                    print(f'Path {savedtarget.upper()} does not exist!')
+                            elif file.endswith(savedSchema1):
+                                if os.path.exists(savedtarget1) is True:
+                                    shutil.move(f'{savedSource}/{file}', savedtarget1)
+                                    print(f'Sorting to {savedtarget1.upper()} directory finished succesfuly')
+                                elif os.path.exists(savedtarget1) is False:
+                                    print(f'Path {savedtarget1.upper()} does not exist!')
+                            elif file.endswith(savedSchema2):
+                                if os.path.exists(savedtarget2) is True:
+                                    shutil.move(f'{savedSource}/{file}', savedtarget2)
+                                    print(f'Sorting to {savedtarget2.upper()} directory finished succesfuly')
+                                elif os.path.exists(savedtarget2) is False:
+                                    print(f'Path {savedtarget2.upper()} does not exist!')
+                            elif file.endswith(savedSchema3):
+                                if os.path.exists(savedtarget3) is True:
+                                    shutil.move(f'{savedSource}/{file}', savedtarget3)
+                                    print(f'Sorting to {savedtarget3.upper()} directory finished succesfuly')
+                                elif os.path.exists(savedtarget3) is False:
+                                    print(f'Path {savedtarget3.upper()} does not exist!')
+                    else:
+                        print(f'{file} doesnt match any schema!\nIt was moved to a "OTHER" folder (C:/Users/Kacper/Desktop/odrzut)')
+                        shutil.move(f'{savedSource}/{file}', f'C:/Users/Kacper/Desktop/odrzut')
+                        
+                print('--------------------------Sorting finished succefully!--------------------------')
         
     def autoSort(self):
         
